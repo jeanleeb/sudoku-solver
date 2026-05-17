@@ -19,7 +19,6 @@ func (b *Board) checkCellVal(row, col, val int) bool {
 		return false
 	}
 
-	b.Set(row, col, val)
 	return true
 }
 
@@ -30,10 +29,12 @@ func Solve(b *Board) bool {
 	}
 
 	for val := 1; val <= 9; val++ {
-		stepRes := b.checkCellVal(emptyRow, emptyCol, val)
-		if !stepRes {
+		stepValid := b.checkCellVal(emptyRow, emptyCol, val)
+		if !stepValid {
 			continue
 		}
+		b.Set(emptyRow, emptyCol, val)
+
 		if Solve(b) {
 			return true
 		}
@@ -65,10 +66,12 @@ func solveStepped(b *Board, ch chan<- Step) bool {
 	}
 
 	for val := 1; val <= 9; val++ {
-		stepRes := b.checkCellVal(emptyRow, emptyCol, val)
-		if !stepRes {
+		stepValid := b.checkCellVal(emptyRow, emptyCol, val)
+		if !stepValid {
 			continue
 		}
+		b.Set(emptyRow, emptyCol, val)
+
 		ch <- Step{
 			Row:    emptyRow,
 			Col:    emptyCol,

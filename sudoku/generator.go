@@ -6,9 +6,7 @@ import (
 )
 
 func countSolutions(b *Board, count *int, limit int) {
-	copy := b.Copy()
-
-	emptyRow, emptyCol := copy.findFirstEmptyCell()
+	emptyRow, emptyCol := b.findFirstEmptyCell()
 	if emptyRow == -1 || emptyCol == -1 {
 		if b.IsSolved() {
 			*count++
@@ -17,16 +15,18 @@ func countSolutions(b *Board, count *int, limit int) {
 	}
 
 	for val := 1; val <= 9; val++ {
-		stepRes := copy.checkCellVal(emptyRow, emptyCol, val)
-		if !stepRes {
+		stepValid := b.checkCellVal(emptyRow, emptyCol, val)
+		if !stepValid {
 			continue
 		}
-		countSolutions(copy, count, limit)
+		b.Set(emptyRow, emptyCol, val)
+
+		countSolutions(b, count, limit)
+
+		b.Set(emptyRow, emptyCol, 0)
 		if *count >= limit {
 			return
 		}
-
-		copy.Set(emptyRow, emptyCol, 0)
 	}
 }
 
@@ -67,15 +67,19 @@ func digHoles(b *Board, amount int) {
 
 	holes := 0
 	for _, coord := range coordinates {
-		b.Set(coord[0], coord[1], 0)
+		row, col := coord[0], coord[1]
+		original := b.Get(row, col)
+		b.Set(row, col, 0)
+
 		solutions := 0
 		countSolutions(b, &solutions, 2)
 		if solutions == 1 {
-			b.Set(coord[0], coord[1], 0)
 			holes++
 			if holes >= amount {
 				break
 			}
+		} else {
+			b.Set(row, col, original)
 		}
 	}
 }
