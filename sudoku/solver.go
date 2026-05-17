@@ -11,7 +11,7 @@ func (b *Board) findFirstEmptyCell() (int, int) {
 	return -1, -1 // No empty cell found
 }
 
-func (b *Board) handleStep(row, col, val int) bool {
+func (b *Board) checkCellVal(row, col, val int) bool {
 	if b.Get(row, col) != 0 {
 		return false
 	}
@@ -30,7 +30,7 @@ func Solve(b *Board) bool {
 	}
 
 	for val := 1; val <= 9; val++ {
-		stepRes := b.handleStep(emptyRow, emptyCol, val)
+		stepRes := b.checkCellVal(emptyRow, emptyCol, val)
 		if !stepRes {
 			continue
 		}
@@ -65,7 +65,7 @@ func solveStepped(b *Board, ch chan<- Step) bool {
 	}
 
 	for val := 1; val <= 9; val++ {
-		stepRes := b.handleStep(emptyRow, emptyCol, val)
+		stepRes := b.checkCellVal(emptyRow, emptyCol, val)
 		if !stepRes {
 			continue
 		}
