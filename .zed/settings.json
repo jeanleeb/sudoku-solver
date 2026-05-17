@@ -11,6 +11,9 @@
         "vscode-html-language-server",
       ],
     },
+    "CSS": {
+      "language_servers": ["tailwindcss-intellisense-css"],
+    },
   },
   "lsp": {
     "vscode-html-language-server": {

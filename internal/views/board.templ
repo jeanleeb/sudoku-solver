@@ -7,7 +7,7 @@ import "strconv"
 templ BoardView(original, current *sudoku.Board, errors [9][9]bool) {
 	<form method="POST" action="/check">
 		<div class="flex flex-col justify-center">
-			<div class="grid grid-cols-9 gap-0 border-2 border-gray-400">
+			<div class="grid grid-cols-9 gap-0 border-2 border-gray-400 mb-6">
 				for row := 0; row < 9; row++ {
 					for col := 0; col < 9; col++ {
 						{{ val := current.Get(row, col) }}
@@ -47,7 +47,10 @@ templ BoardView(original, current *sudoku.Board, errors [9][9]bool) {
 					}
 				}
 			</div>
-			<button type="submit">Check</button>
+			<div class="flex flex-col items-center gap-4">
+				<button class="h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800  text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer" type="submit">Check</button>
+				<a href="/new" class="h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer">New Game</a>
+			</div>
 		</div>
 	</form>
 }

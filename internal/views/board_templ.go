@@ -33,7 +33,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form method=\"POST\" action=\"/check\"><div class=\"flex flex-col justify-center\"><div class=\"grid grid-cols-9 gap-0 border-2 border-gray-400\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form method=\"POST\" action=\"/check\"><div class=\"flex flex-col justify-center\"><div class=\"grid grid-cols-9 gap-0 border-2 border-gray-400 mb-6\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -122,7 +122,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><button type=\"submit\">Check</button></div></form>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><div class=\"flex flex-col items-center gap-4\"><button class=\"h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"submit\">Check</button> <a href=\"/new\" class=\"h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\">New Game</a></div></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
