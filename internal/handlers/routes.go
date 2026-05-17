@@ -21,4 +21,6 @@ func Register(mux *http.ServeMux, svc *Service) {
 	mux.HandleFunc("GET /", svc.Home)
 	mux.HandleFunc("GET /new", svc.New)
 	mux.HandleFunc("POST /check", svc.Check)
+	mux.HandleFunc("GET /solve/stream", svc.Solve)
+	mux.Handle("GET /static/", http.StripPrefix("/static", http.FileServer((http.Dir("static")))))
 }

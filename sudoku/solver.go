@@ -53,10 +53,10 @@ const (
 )
 
 type Step struct {
-	Row    int
-	Col    int
-	Value  int
-	Action Action
+	Row    int    `json:"row"`
+	Col    int    `json:"col"`
+	Value  int    `json:"value"`
+	Action Action `json:"action"`
 }
 
 func solveStepped(b *Board, ch chan<- Step) bool {

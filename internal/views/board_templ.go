@@ -41,6 +41,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 			for col := 0; col < 9; col++ {
 				val := current.Get(row, col)
 				isError := errors[row][col]
+				cellId := fmt.Sprintf("cell-%d-%d", row, col)
 				var templ_7745c5c3_Var2 = []any{"w-12 h-12 flex items-center justify-center text-lg border border-gray-700",
 					templ.KV("border-l-2 border-l-gray-400", col%3 == 0 && col > 0),
 					templ.KV("border-t-2 border-t-gray-400", row%3 == 0 && row > 0),
@@ -73,7 +74,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					var templ_7745c5c3_Var4 string
 					templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(val)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 26, Col: 13}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 27, Col: 13}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 					if templ_7745c5c3_Err != nil {
@@ -85,27 +86,27 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					if curVal != 0 {
 						strVal = strconv.Itoa(curVal)
 					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<input type=\"text\" inputmode=\"numeric\" pattern=\"[1-9]\" oninput=\"this.value=this.value.replace(/[^0-9]/g,'')\" name=\"")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<input name=\"")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var5 string
-					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(fmt.Sprintf("cell-%d-%d", row, col))
+					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(cellId)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 40, Col: 51}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 37, Col: 22}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" value=\"")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" type=\"text\" inputmode=\"numeric\" pattern=\"[1-9]\" oninput=\"this.value=this.value.replace(/[^0-9]/g,'')\" value=\"")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var6 string
 					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(strVal)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 41, Col: 23}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 42, Col: 23}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 					if templ_7745c5c3_Err != nil {
@@ -122,7 +123,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><div class=\"flex flex-col items-center gap-4\"><button class=\"h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"submit\">Check</button> <a href=\"/new\" class=\"h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\">New Game</a></div></div></form>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><div class=\"flex flex-col items-center gap-4\"><button class=\"h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"submit\">Check</button> <button id=\"solve-btn\" class=\"h-12 w-full border border-blue-500 hover:border-blue-700 active:border-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"button\">Solve</button> <a href=\"/new\" class=\"h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\">New Game</a></div></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
