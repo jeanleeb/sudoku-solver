@@ -2,20 +2,32 @@
   "languages": {
     "Templ": {
       "format_on_save": "on",
+      "inlay_hints": {
+        "enabled": true,
+      },
       "language_servers": [
         "templ",
-        "!gopls",
         "tailwindcss-language-server",
         "vscode-html-language-server",
-        "emmet-language-server",
       ],
     },
   },
   "lsp": {
+    "vscode-html-language-server": {
+      "settings": {
+        "html": {
+          "includeLanguages": {
+            "templ": "html",
+            "Templ": "html",
+          },
+        },
+      },
+    },
     "tailwindcss-language-server": {
       "settings": {
         "includeLanguages": {
           "templ": "html",
+          "Templ": "html",
         },
         "experimental": {
           "classRegex": ["class=\"([^\"]*)\"", "className=\"([^\"]*)\""],
