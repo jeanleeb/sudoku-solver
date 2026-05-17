@@ -10,8 +10,9 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "jeanleeb/sudoku-solver/sudoku"
 import "fmt"
+import "strconv"
 
-func BoardView(b *sudoku.Board, errors [9][9]bool) templ.Component {
+func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -32,13 +33,13 @@ func BoardView(b *sudoku.Board, errors [9][9]bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid grid-cols-9 gap-0 border-2 border-gray-400\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form method=\"POST\" action=\"/check\"><div class=\"flex flex-col justify-center\"><div class=\"grid grid-cols-9 gap-0 border-2 border-gray-400\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for row := 0; row < 9; row++ {
 			for col := 0; col < 9; col++ {
-				val := b.Get(row, col)
+				val := current.Get(row, col)
 				isError := errors[row][col]
 				var templ_7745c5c3_Var2 = []any{"w-12 h-12 flex items-center justify-center text-lg border border-gray-700",
 					templ.KV("border-l-2 border-l-gray-400", col%3 == 0 && col > 0),
@@ -68,17 +69,22 @@ func BoardView(b *sudoku.Board, errors [9][9]bool) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				if val != 0 {
+				if original.Get(row, col) != 0 {
 					var templ_7745c5c3_Var4 string
 					templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(val)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 23, Col: 11}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 26, Col: 13}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				} else {
+					curVal := current.Get(row, col)
+					strVal := ""
+					if curVal != 0 {
+						strVal = strconv.Itoa(curVal)
+					}
 					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<input type=\"text\" inputmode=\"numeric\" pattern=\"[1-9]\" oninput=\"this.value=this.value.replace(/[^0-9]/g,'')\" name=\"")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
@@ -86,24 +92,37 @@ func BoardView(b *sudoku.Board, errors [9][9]bool) templ.Component {
 					var templ_7745c5c3_Var5 string
 					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(fmt.Sprintf("cell-%d-%d", row, col))
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 30, Col: 49}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 40, Col: 51}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" maxlength=\"1\" class=\"w-full h-full bg-transparent text-center text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500\">")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" value=\"")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					var templ_7745c5c3_Var6 string
+					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(strVal)
+					if templ_7745c5c3_Err != nil {
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 41, Col: 23}
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" maxlength=\"1\" class=\"w-full h-full bg-transparent text-center text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500\">")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><button type=\"submit\">Check</button></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

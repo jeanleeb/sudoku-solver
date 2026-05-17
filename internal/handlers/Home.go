@@ -7,10 +7,12 @@ import (
 )
 
 func (s *Service) Home(w http.ResponseWriter, r *http.Request) {
-	if s.current == nil {
+	if s.current == nil || s.original == nil {
 		puzzle, _ := sudoku.Generate()
-		s.current = puzzle
+		s.original = puzzle
+		copy := puzzle.Copy()
+		s.current = copy
 	}
-	component := views.BoardView(s.current, [9][9]bool{})
+	component := views.BoardView(s.original, s.current, s.errors)
 	views.Layout("Sudoku", component).Render(r.Context(), w)
 }
