@@ -1,0 +1,26 @@
+{
+  "languages": {
+    "Templ": {
+      "format_on_save": "on",
+      "language_servers": [
+        "templ",
+        "!gopls",
+        "tailwindcss-language-server",
+        "vscode-html-language-server",
+        "emmet-language-server",
+      ],
+    },
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "templ": "html",
+        },
+        "experimental": {
+          "classRegex": ["class=\"([^\"]*)\"", "className=\"([^\"]*)\""],
+        },
+      },
+    },
+  },
+}

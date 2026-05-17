@@ -1,0 +1,17 @@
+package views
+
+templ Layout(title string, content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>{ title }</title>
+			<script src="https://cdn.tailwindcss.com"></script>
+		</head>
+		<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center">
+			<h1 class="text-3xl font-bold mb-8">Sudoku</h1>
+			@content
+		</body>
+	</html>
+}

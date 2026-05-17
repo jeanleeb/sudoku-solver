@@ -1,0 +1,39 @@
+package views
+
+import "jeanleeb/sudoku-solver/sudoku"
+import "fmt"
+
+templ BoardView(b *sudoku.Board, errors [9][9]bool) {
+	<div class="grid grid-cols-9 gap-0 border-2 border-gray-400">
+		for row := 0; row < 9; row++ {
+			for col := 0; col < 9; col++ {
+				{{ val := b.Get(row, col) }}
+				{{ isError := errors[row][col] }}
+				<div
+					class={
+						"w-12 h-12 flex items-center justify-center text-lg border border-gray-700",
+						templ.KV("border-l-2 border-l-gray-400", col%3 == 0 && col > 0),
+						templ.KV("border-t-2 border-t-gray-400", row%3 == 0 && row > 0),
+						templ.KV("bg-red-900", isError),
+						templ.KV("font-bold text-yellow-400", val != 0),
+						templ.KV("text-gray-300", val == 0),
+					}
+				>
+					if val != 0 {
+						{ val }
+					} else {
+						<input
+							type="text"
+							inputmode="numeric"
+							pattern="[1-9]"
+							oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+							name={ fmt.Sprintf("cell-%d-%d", row, col) }
+							maxlength="1"
+							class="w-full h-full bg-transparent text-center text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						/>
+					}
+				</div>
+			}
+		}
+	</div>
+}
