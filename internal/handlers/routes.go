@@ -10,6 +10,7 @@ type Service struct {
 	original *sudoku.Board
 	current  *sudoku.Board
 	errors   [9][9]bool
+	isSolved bool
 }
 
 func Register(mux *http.ServeMux, svc *Service) {

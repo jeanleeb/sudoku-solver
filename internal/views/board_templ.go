@@ -12,7 +12,7 @@ import "jeanleeb/sudoku-solver/sudoku"
 import "fmt"
 import "strconv"
 
-func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Component {
+func BoardView(original, current *sudoku.Board, errors [9][9]bool, isSolved bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -48,7 +48,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					templ.KV("bg-red-900", isError),
 					templ.KV("font-bold text-yellow-400", original.Get(row, col) != 0),
 					templ.KV("text-gray-300", val == 0),
-				}
+					templ.KV("bg-green-900", isSolved && original.Get(row, col) == 0)}
 				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -74,7 +74,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					var templ_7745c5c3_Var4 string
 					templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(val)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 27, Col: 13}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 26, Col: 13}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 					if templ_7745c5c3_Err != nil {
@@ -93,7 +93,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					var templ_7745c5c3_Var5 string
 					templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.ResolveAttributeValue(cellId)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 37, Col: 22}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 36, Col: 22}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 					if templ_7745c5c3_Err != nil {
@@ -106,24 +106,52 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					var templ_7745c5c3_Var6 string
 					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.ResolveAttributeValue(strVal)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 42, Col: 23}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 41, Col: 23}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" maxlength=\"1\" class=\"w-full h-full bg-transparent text-center text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500\">")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" disabled=\"")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					var templ_7745c5c3_Var7 string
+					templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.ResolveAttributeValue(isSolved)
+					if templ_7745c5c3_Err != nil {
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/board.templ`, Line: 42, Col: 28}
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" maxlength=\"1\" class=\"w-full h-full bg-transparent text-center text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500\">")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div>")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div><div class=\"flex flex-col items-center gap-4\"><button class=\"h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"submit\">Check</button> <button id=\"solve-btn\" class=\"h-12 w-full border border-blue-500 hover:border-blue-700 active:border-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"button\">Solve</button> <a href=\"/new\" class=\"h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\">New Game</a></div></div></form>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div><div class=\"flex flex-col items-center gap-4\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if isSolved {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<span class=\"h-12 w-full bg-green-700 text-neutral-50 font-bold py-2 px-4 rounded text-center flex justify-center items-center\">✅ Puzzle solved!</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<button class=\"h-12 w-full bg-blue-500 hover:bg-blue-700 active:bg-blue-800 text-neutral-50 font-bold rounded cursor-pointer\" type=\"submit\">Check</button> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<button id=\"solve-btn\" class=\"h-12 w-full border border-blue-500 hover:border-blue-700 active:border-blue-800 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\" type=\"button\">Solve</button> <a href=\"/new\" class=\"h-12 bg-transparent hover:underline active:text-neutral-200 text-neutral-50 font-bold py-2 px-4 rounded cursor-pointer\">New Game</a></div></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

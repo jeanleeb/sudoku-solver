@@ -52,6 +52,7 @@ func (s *Service) Check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	s.errors = errors
+	s.isSolved = s.current.IsSolved()
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

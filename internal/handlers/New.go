@@ -19,6 +19,7 @@ func (s *Service) New(w http.ResponseWriter, r *http.Request) {
 	copy := puzzle.Copy()
 	s.current = copy
 	s.errors = [9][9]bool{}
+	s.isSolved = false
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

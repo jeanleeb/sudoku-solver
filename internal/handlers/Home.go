@@ -11,7 +11,7 @@ func (s *Service) Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	component := views.BoardView(s.original, s.current, s.errors)
+	component := views.BoardView(s.original, s.current, s.errors, s.isSolved)
 	err := views.Layout("Sudoku", component).Render(r.Context(), w)
 	if err != nil {
 		http.Error(w, "Failed to render the page", http.StatusInternalServerError)
