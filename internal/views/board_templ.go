@@ -46,7 +46,7 @@ func BoardView(original, current *sudoku.Board, errors [9][9]bool) templ.Compone
 					templ.KV("border-l-2 border-l-gray-400", col%3 == 0 && col > 0),
 					templ.KV("border-t-2 border-t-gray-400", row%3 == 0 && row > 0),
 					templ.KV("bg-red-900", isError),
-					templ.KV("font-bold text-yellow-400", val != 0),
+					templ.KV("font-bold text-yellow-400", original.Get(row, col) != 0),
 					templ.KV("text-gray-300", val == 0),
 				}
 				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)

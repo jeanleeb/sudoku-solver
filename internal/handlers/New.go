@@ -6,7 +6,14 @@ import (
 )
 
 func (s *Service) New(w http.ResponseWriter, r *http.Request) {
-	puzzle, _ := sudoku.Generate()
+	puzzle, err := sudoku.Generate()
+	if err != nil {
+		puzzle, err = sudoku.Generate()
+	}
+	if err != nil {
+		http.Error(w, "Failed to generate a new puzzle", http.StatusInternalServerError)
+		return
+	}
 
 	s.original = puzzle
 	copy := puzzle.Copy()

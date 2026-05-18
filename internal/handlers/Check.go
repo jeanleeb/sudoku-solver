@@ -7,7 +7,12 @@ import (
 )
 
 func (s *Service) Check(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Failed to parse form data", http.StatusBadRequest)
+		return
+	}
+
 	var errors [9][9]bool
 
 	for row := range 9 {
@@ -17,7 +22,7 @@ func (s *Service) Check(w http.ResponseWriter, r *http.Request) {
 			if s.original.Get(row, col) != 0 {
 				continue
 			}
-			if s.original.Get(row, col) == 0 && valStr == "" {
+			if valStr == "" {
 				s.current.Set(row, col, 0)
 				errors[row][col] = false
 				continue
