@@ -29,6 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
       solveBtn.textContent = "Solve";
     });
 
+    eventSource.addEventListener("failed", () => {
+      eventSource.close();
+      inputs.forEach((input) => (input.disabled = false));
+      solveBtn.disabled = false;
+      solveBtn.textContent = "Solve";
+    });
+
     eventSource.addEventListener("error", () => {
       eventSource.close();
       inputs.forEach((input) => (input.disabled = false));

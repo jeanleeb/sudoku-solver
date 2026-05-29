@@ -21,7 +21,7 @@ func (s *Service) Solve(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	board := s.current.Copy()
+	board := s.original.Copy()
 
 	ch := sudoku.SolveStepped(board)
 
@@ -37,6 +37,7 @@ func (s *Service) Solve(w http.ResponseWriter, r *http.Request) {
 
 	if board.IsSolved() {
 		fmt.Fprintf(w, "event: done\ndata: {}\n\n")
+		s.isSolved = true
 	} else {
 		fmt.Fprintf(w, "event: failed\ndata: {}\n\n")
 	}
